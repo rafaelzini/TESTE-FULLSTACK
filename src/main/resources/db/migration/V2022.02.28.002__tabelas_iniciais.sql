@@ -1,0 +1,10 @@
+create table filme (id int8 not null, diretor varchar(255), genero varchar(255), nome varchar(255), quantidade int8, primary key (id));
+create table historico (id int8 not null, primary key (id));
+create table locacao (id int8 not null, data_devolucao timestamp, data_locacao timestamp, data_para_devolucao timestamp,devolvido bool, filme_id int8, usuario_id int8, primary key (id));
+create table usuario (id int8 not null, data_nascimento date, cpf varchar(255), nome varchar(255), sexo varchar(255), primary key (id));
+create sequence filme_id_seq start 1 increment 1;
+create sequence historico_id_seq start 1 increment 1;
+create sequence locacao_id_seq start 1 increment 1;
+create sequence usuario_id_seq start 1 increment 1;
+alter table if exists locacao add constraint FK4ilvguhqre01t27h32n44a0iy foreign key (filme_id) references filme;
+alter table if exists locacao add constraint FKkktfq622phc5otk6901ju9eqk foreign key (usuario_id) references usuario;
