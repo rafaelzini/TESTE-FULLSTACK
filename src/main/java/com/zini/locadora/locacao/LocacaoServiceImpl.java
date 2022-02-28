@@ -29,11 +29,22 @@ public class LocacaoServiceImpl implements LocacaoService {
     private LocacaoRepository locacaoRepository;
 
     @Override
-    public LocacaoModel save(LocacaoModel model) {
+    public LocacaoModel save(LocacaoModel model) throws Exception {
+
+        if (!checaDisponibilidade(model.getFilme().getId())) {
+            throw new Exception("Filme Indisponivel");
+        }
+
         Locacao entity = new Locacao();
         modelToEntity(entity, model);
         entity = locacaoRepository.save(entity);
         return entityToModel(model, entity);
+    }
+
+    public Boolean checaDisponibilidade(Long filmeId) {
+        FilmeModel filmeModel = filmeService.findById(filmeId);
+        Long quantidadeAlugada = locacaoRepository.contaFilmesAlugadosPorId(filmeId);
+        return filmeModel.getQuantidade() > quantidadeAlugada;
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LocacaoService {
 
-    LocacaoModel save(LocacaoModel model);
+    LocacaoModel save(LocacaoModel model) throws Exception;
 
     List<LocacaoModel> list();
 

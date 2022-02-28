@@ -63,6 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         entity.setSexo(model.getSexo());
         entity.setNome(model.getNome());
         entity.setId(model.getId());
+        entity.setDataNascimento(model.getDataNascimento());
     }
 
     @Override
@@ -71,6 +72,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         model.setSexo(entity.getSexo());
         model.setNome(entity.getNome());
         model.setId(entity.getId());
+        model.setDataNascimento(entity.getDataNascimento());
         return model;
     }
 

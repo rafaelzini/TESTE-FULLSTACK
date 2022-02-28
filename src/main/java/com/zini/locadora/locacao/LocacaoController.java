@@ -20,7 +20,7 @@ public class LocacaoController {
     }
 
     @PostMapping
-    public LocacaoModel save(@Valid @RequestBody LocacaoModel dto) {
+    public LocacaoModel save(@Valid @RequestBody LocacaoModel dto) throws Exception {
         return service.save(dto);
     }
 
