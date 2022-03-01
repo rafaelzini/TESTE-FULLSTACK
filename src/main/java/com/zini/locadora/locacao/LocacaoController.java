@@ -1,6 +1,7 @@
 package com.zini.locadora.locacao;
 
 import com.zini.locadora.models.LocacaoModel;
+import com.zini.locadora.models.RenovacaoLocacaoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +21,23 @@ public class LocacaoController {
     }
 
     @PostMapping
-    public LocacaoModel save(@Valid @RequestBody LocacaoModel dto) throws Exception {
-        return service.save(dto);
+    public LocacaoModel save(@Valid @RequestBody LocacaoModel model) throws Exception {
+        return service.save(model);
     }
 
     @GetMapping("/{id}")
     public LocacaoModel findById(@PathVariable("id") Long id) {
         return service.findById(id);
+    }
+
+    @PutMapping("/renovacao")
+    public LocacaoModel renovarLocacao(@Valid @RequestBody RenovacaoLocacaoModel model) throws Exception {
+        return service.renovarLocacao(model);
+    }
+
+    @PutMapping("/devolucao/{id}")
+    public LocacaoModel devolucao(@PathVariable("id") Long id) throws Exception {
+        return service.devolucao(id);
     }
 
     @DeleteMapping("/{id}")

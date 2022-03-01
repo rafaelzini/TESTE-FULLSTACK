@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
@@ -22,8 +23,11 @@ public class Locacao {
     private Long id;
     @ManyToOne
     private Usuario usuario;
-    @ManyToOne
-    private Filme filme;
+    @ManyToMany
+    @JoinTable(name = "locacao_filmes", joinColumns =
+            {@JoinColumn(name = "locacao_id")}, inverseJoinColumns =
+            {@JoinColumn(name = "filme_id")})
+    private List<Filme> filmes;
     @Column
     private LocalDateTime dataLocacao;
     @Column
@@ -32,5 +36,7 @@ public class Locacao {
     private LocalDateTime dataDevolucao;
     @Column
     private Boolean devolvido;
+    @Column
+    private Long renovacoes;
 
 }
