@@ -37,11 +37,11 @@ public class LocacaoServiceImpl implements LocacaoService {
             throw new Exception("Não é possivel alugar mais que 5 filmes!!");
         }
 
-//        for (FilmeModel f : model.getFilmes()) {
-//            if (!checaDisponibilidade(f.getId())) {
-//                throw new Exception("O Filme " + f.getNome() + " está Indisponivel");
-//            }
-//        }
+        for (FilmeModel f : model.getFilmes()) {
+            if (!checaDisponibilidade(f.getId())) {
+                throw new Exception("O Filme " + f.getNome() + " está Indisponivel");
+            }
+        }
 
         Locacao entity = new Locacao();
         modelToEntity(entity, model);

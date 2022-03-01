@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 
-    @Query(value = "select count(*) from locacao l where l.filme_id = :filmeId and devolvido is null or devolvido = false", nativeQuery = true)
+    @Query(value = "select count(*) from locacao l inner join locacao_filmes lf on l.id  = lf.locacao_id  where lf.filme_id = :filmeId and l.devolvido is null or devolvido = false", nativeQuery = true)
     Long contaFilmesAlugadosPorId(@Param("filmeId") Long filmeId);
 
 }
