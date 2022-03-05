@@ -1,0 +1,75 @@
+.main-container { 
+    padding: 20px 10px 20px 10px;
+
+    .card-body {
+        .text-align{
+            display: flex;
+            justify-content: center;
+        }
+    }
+    
+    .body-container{
+        .separate-group{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .left-header-group{
+                box-sizing: 800px;
+                .input-search{
+                    width: 350px;
+                }
+            }
+
+        }
+
+        .table-container{
+            .p-datatable-sm {
+                font-size: 15px;
+            }
+              p {
+              cursor: default;
+              margin: 0;
+              max-width: 30ch;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .active-true{
+                background-color: green;
+            }
+            .active-false{
+                background-color: red;
+            }
+            .dropdown-toggle::after {
+                display:none;
+            }
+            .conteudo_dropdown-menu {
+                background-color: rgb(48, 47, 47);
+                color: rgb(255, 255, 255);                
+                
+              }
+            .btn-circle {
+                width: 30px;
+                height: 30px;
+                padding: 6px 0px;
+                border-radius: 15px;
+                text-align: center;
+                font-size: 12px;
+                line-height: 1.42857;
+            }
+        }
+        .p-table td, .p-table th {
+            font-size: 50%;
+            padding: .50rem;
+            min-width: 100px;
+        }
+        .search-text-response{
+            color: #979797;
+            font-size: 1.2rem;
+            margin: 0px 0px 10px 5px;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+        }
+
+    }
+}

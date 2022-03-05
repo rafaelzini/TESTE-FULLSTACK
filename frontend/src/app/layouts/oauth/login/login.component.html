@@ -1,0 +1,167 @@
+<div class="container-main">
+    <div class="header-container">
+
+    </div>
+    <div class="body-container">
+        <div class="separated-group">
+            <div class="col-md-4">
+                <div class="left-container">
+
+                    <div *ngIf="loginCard" class="card">
+                        <div class="card-header">
+                            <img src="" style="width: 150px;">
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="col-md-12">
+                                    <form autocomplete="off" method="post" #frm="ngForm">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h5>Entrar</h5>
+                                                <p>Acesse com e-mail e senha</p>
+                                                <input pInputText type="email" class="form-control input-text-group" placeholder="E-mail" name="login" [(ngModel)]="accountUsername" [disabled]="disableInterface" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input pInputText type="password" class="form-control input-text-group" placeholder="Senha" name="password" [(ngModel)]="accountPassword" [disabled]="disableInterface" required (keyup.enter)="login()" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="update ml-auto mr-auto">
+                                                <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="frm.invalid || disableInterface">ENTRAR <span *ngIf="disableInterface == true" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="footer-container">
+                            <div><a class="forgot-password" style="cursor: pointer" (click)="lostPasswordCard()">Esqueci
+                                    minha
+                                    senha</a></div>
+
+                            <div *ngIf="invalidUser" style="color: rgb(231, 49, 49);">Dados não conferem</div>
+                            <div>
+                                <a class="register" style="cursor: pointer" (click)="showRegisterCard()">Não possui
+                                    conta? Registre-se aqui !</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="forgotPasswordCard" class="card">
+                        <div class="card-header">
+                            <img src="" style="width: 150px;">
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div *ngIf="!requestNewPassword" class="col-md-12">
+                                    <form autocomplete="off" method="post" #frm="ngForm">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h5>Esqueceu a senha?</h5>
+                                                <p>Digite seu e-mail para recuperar</p>
+                                                <input pInputText type="email" class="form-control input-text-group" placeholder="E-mail" name="login" [(ngModel)]="accountUsername" [disabled]="disableInterface" (keyup.enter)="recoverPassword()" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="update ml-auto mr-auto">
+                                                <button type="submit" class="btn btn-primary" (click)="recoverPassword()" [disabled]="frm.invalid || disableInterface">RECUPERAR <span *ngIf="disableInterface == true" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="passwordError" class="col-md-12">
+                                            <p *ngIf="passwordError" class="error"> {{passwordErrorMessage}} </p>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <div *ngIf="requestNewPassword" class="card-body" style="text-align: center;">
+                                    <div class="col-md-12">
+                                        <img class="icon" src="../../../../assets/img/icone-sucesso.jpg" alt="">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p>
+                                            Solicitação para recuperar senha efetuada com sucesso, em breve recebera um e-mail com um link para redefinir sua senha.
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="footer-container">
+                            <div><a class="forgot-password" style="cursor: pointer" (click)="backToLoginCard()">Voltar
+                                    para Login</a>
+                            </div>
+                            <div>
+                                <a class="register" style="cursor: pointer" (click)="showRegisterCard()">Não possui
+                                    conta? Cadastre-se aqui !</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="registerCard" class="card">
+                        <div class="card-header">
+                            <img src="" style="width: 150px;">
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div *ngIf="!waitingRegister" class="col-md-12">
+                                    <form autocomplete="off" method="post" #frm="ngForm">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h5>Registrar</h5>
+                                                <p>Informe seus dados</p>
+                                                <input pInputText type="text" class="form-control input-text-group" placeholder="Nome" name="name" [(ngModel)]="accountName" [disabled]="disableInterface" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input pInputText type="text" class="form-control input-text-group" placeholder="CNPJ/CPF" name="CNPJ/CPF" [(ngModel)]="accountCnpjCpf" mask="000.000.000-00||00.000.000/0000-00" minlength="11" maxlength="19" [disabled]="disableInterface" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input pInputText type="email" class="form-control input-text-group" placeholder="E-mail" name="login" [(ngModel)]="accountUsername" [disabled]="disableInterface" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="update ml-auto mr-auto">
+                                                <button type="submit" class="btn btn-primary" (click)="register()" [disabled]="frm.invalid || disableInterface">REGISTRAR <span *ngIf="disableInterface == true" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div *ngIf="waitingRegister" class="card-body" style="text-align: center;">
+                                    <div class="col-md-12">
+                                        <img class="icon" src="../../../../assets/img/icone-sucesso.jpg" alt="">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p>Seu registro está quase pronto, em breve receberá um e-mail para criar uma senha!</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="footer-container">
+                            <div><a class="forgot-password" style="cursor: pointer" (click)="lostPasswordCard()">Esqueci
+                                    minha
+                                    senha</a></div>
+                            <div><a class="forgot-password" style="cursor: pointer" (click)="backToLoginCard()">Voltar
+                                    para Login</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="right-container">
+                    <div class="text-container">
+                        <p class="center-title">Dalinda</p>
+                        <p class="center-subtitle">A plataforma Web completa</p>
+                        <p class="center-subtitle">para o seu negócio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

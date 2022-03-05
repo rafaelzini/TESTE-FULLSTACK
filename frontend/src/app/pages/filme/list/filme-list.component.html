@@ -1,0 +1,98 @@
+<div class="main-container">
+  <div class="header-container">
+    <h3> Filmes </h3>
+  </div>
+
+  <div class="body-container">
+    <div class="separate-group">
+      <div class="left-header-group">        
+        
+      </div>
+      <div class="right-header-group">
+        <button type="button" class="btn btn-light" [routerLink]="['/filme/form']"><i class="fa fa-user-plus"></i>
+          Novo</button>
+      </div>
+    </div>
+    <div class="card">
+
+      <div class="card-header">
+
+      </div>
+
+      <div class="card-body">
+        <div *ngIf="loading">
+          <div class="d-flex align-items-center">
+            <strong>Buscando filmes...</strong>
+            <div class="spinner-border text-align" role="status" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="table-container" *ngIf="!loading">
+          <div class="search-text-response" *ngIf="filmes.length == 0">
+            Nenhum filme encontrado.
+          </div>
+          <p-table [lazy]="true" (onLazyLoad)="getFilmes($event)" *ngIf="filmes.length > 0" styleClass="p-datatable-sm"
+            [value]="filmes" [(rows)]="filmeFilter.size" [showCurrentPageReport]="true" [paginator]="true"
+            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [totalRecords]="totalRecords"
+            currentPageReportTemplate="Vizualizando {first} de {last} em um total de {totalRecords} registros.">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th pSortableColumn="companyName" style="text-align: center">Nome <p-sortIcon field="companyName">
+                  </p-sortIcon>
+                </th>
+                <th pSortableColumn="tradingName" style="text-align: center">Genero <p-sortIcon field="tradingName">
+                  </p-sortIcon>
+                </th>
+                <th pSortableColumn="nationalRegistry" style="text-align: center">Diretor <p-sortIcon
+                    field="nationalRegistry"></p-sortIcon>
+                </th>
+                <th style="text-align: center">Açoes</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-filme let-columns="columns">
+              <tr>
+                <td style="text-align: center">{{filme.nome}}</td>
+                <td style="text-align: center">{{filme.genero}}</td>
+                <td style="text-align: center">{{filme.diretor}}</td>
+                <td>
+                  <div ngbDropdown placement="bottom" style="text-align: center">
+                    <a ngbDropdownToggle id="navbarDropdownMenuLink">
+                      <button type="button" class="btn btn-primary btn-circle"
+                        title="Alterar,deletar,ativar e desativar"><i class="fa fa-bars"></i>
+                      </button>
+                    </a>
+                    <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink"
+                      class="dropdown-menu conteudo_dropdown-menu">
+                      <a ngbDropdownItem href="javascript:void(0)" (click)="editFilme(filme.id)"><i
+                          class="fa fa-edit"></i> Alterar</a>
+                      <a ngbDropdownItem href="javascript:void(0)" (click)="filmeModalDelete(filme)"><i
+                          class="fa fa-trash"></i> Deletar</a>
+                      <a ngbDropdownItem href="javascript:void(0)" (click)="filmeModalActiveOrNot(filme)"><i
+                          class="fa fa-power-off"></i> {{filme.active===false?'Ativar':'Desativar'}}</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft" let-filme>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Deletar -->
+<ng-template #modalDelete>
+  <div class="modal-body text-center">
+    <p>
+      Deseja deletar o filme <br>
+      {{filmeDelete.nome}} ?
+    </p>
+    <button type="button" class="btn btn-outline-success" (click)="confirmDelete()" [disabled]="loadingDelete">
+      <span *ngIf="loadingDelete" class="spinner-border spinner-border-sm" role="status"
+        aria-hidden="true"></span>Sim</button>
+    <button type="button" class="btn btn-outline-danger" (click)="cancelDelete()"
+      [disabled]="loadingDelete">Não</button>
+  </div>
+</ng-template>
+

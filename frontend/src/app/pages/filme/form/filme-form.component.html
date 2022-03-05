@@ -1,0 +1,118 @@
+<div class="main-container">
+    <div class="header-container">
+        <div class="separate-group">
+            <div class="left-header-group">
+                <h3 class="page-title"> {{pageTitle}} </h3>
+            </div>
+            <div class="right-header-group">
+                <button type="button" class="btn btn-light" [routerLink]="['/filme/list']">
+                    <i class="fa fa-arrow-left"></i> Voltar </button>
+            </div>
+        </div>
+    </div>
+    <div class="body-container">
+        <div class="separate-group">
+            <div class="left-header-group">
+            </div>
+            <div class="right-header-group">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <form #frm="ngForm" name="formFilme" th:method="post">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="nome"><b>Nome</b></label>
+                            <input type="text" class="form-control" name="nome" id="nome" [(ngModel)]="filme.nome"
+                                required #nome="ngModel" minlength="3" autocomplete="off">
+                            <div class="alert-sm" *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+                                <div *ngIf="nome.errors.required">
+                                    <font color="#a70101" size="1"><b>Campo de preenchimento obrigatório!</b></font>
+                                </div>
+                                <div *ngIf="nome.errors.minlength">
+                                    <font color="#a70101" size="1"><b>O tamanho mínimo para o nome é de 3 letras</b>
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="diretor"><b>Diretor</b></label>
+                            <input type="text" class="form-control" name="diretor" id="diretor"
+                                [(ngModel)]="filme.diretor" required #diretor="ngModel" minlength="3"
+                                autocomplete="off">
+                            <div class="alert-sm" *ngIf="diretor.invalid && (diretor.dirty || diretor.touched)">
+                                <div *ngIf="diretor.errors.required">
+                                    <font color="#a70101" size="1"><b>Campo de preenchimento obrigatório!</b></font>
+                                </div>
+                                <div *ngIf="diretor.errors.minlength">
+                                    <font color="#a70101" size="1"><b>O tamanho mínimo para o nome é de 3 letras</b>
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="genero"><b>Genero</b></label>
+
+                            <select type="text" class="form-control" aria-label="Default select example" name="genero"
+                                id="genero" [(ngModel)]="filme.genero" required #state="ngModel">
+                                <option selected [value]="null">Escolher...</option>
+
+                                <option value="TERROR">Terror</option>
+                                <option value="AVENTURA">Aventura</option>
+                                <option value="ROMANCE">Romance</option>
+                                <option value="FICCAO">Ficção Científica</option>
+                                <option value="FANTASIA">Fantasia</option>
+                                <option value="SUSPENSE">Suspense</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="quantidade"><b>Quantidade</b></label>
+                            <input type="text" class="form-control" name="quantidade" id="quantidade"
+                                [(ngModel)]="filme.quantidade" required #quantidade="ngModel" autocomplete="off">
+                            <div class="alert-sm"
+                                *ngIf="quantidade.invalid && (quantidade.dirty || quantidade.touched)">
+                                <div *ngIf="quantidade.errors.required">
+                                    <font color="#a70101" size="1"><b>Campo de preenchimento obrigatório!</b></font>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="button-area">
+        <div class="d-flex justify-content-end">
+            <button type="button" name="btn1" id="btn1" class="btn btn-success btn-config"
+                (click)="filmeModalUpdate(filme)" [disabled]="frm.invalid"><i class="fa fa-save"></i>
+                {{btnName}}</button>
+            <button type="button" class="btn btn-danger btn-config" [routerLink]="['/filme/list']"><i
+                    class="fa fa-window-close"></i> Cancelar</button>
+        </div>
+    </div>
+</div>
+<ng-template #modalUpdate>
+    <div class="modal-body text-center">
+        <p>
+            Deseja {{btnName}} o cliente <br>
+            {{filmeUpdate.nome}} ?
+        </p>
+        <button type="button" class="btn btn-outline-success" (click)="actionBtnFilme()" [disabled]="loadingUpdate">
+            <span *ngIf="loadingUpdate" class="spinner-border spinner-border-sm" role="document"
+                aria-hidden="true"></span>Sim</button>
+        <button type="button" class="btn btn-outline-danger" (click)="cancelUpdate()"
+            [disabled]="loadingUpdate">Não</button>
+    </div>
+</ng-template>
