@@ -2,7 +2,12 @@ package com.zini.locadora.filme;
 
 import com.zini.locadora.entity.Filme;
 import com.zini.locadora.models.FilmeModel;
+import com.zini.locadora.utils.BaseFilter;
+import com.zini.locadora.utils.TesteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,10 +29,28 @@ public class FilmeServiceImpl implements FilmeService {
     }
 
     @Override
-    public List<FilmeModel> list() {
+    public TesteResponse<FilmeModel> list(BaseFilter baseFilter) {
+
+        Pageable pagination = PageRequest.of(0, (int) filmeRepository.count());
+        if (baseFilter.getPage() != null && baseFilter.getSize() != null) {
+            pagination = PageRequest.of(baseFilter.getPage().intValue(), baseFilter.getSize().intValue());
+        }
+
         List<FilmeModel> results = new ArrayList<>();
-        filmeRepository.findAll().stream().map(r -> results.add(entityToModel(new FilmeModel(), r))).collect(Collectors.toList());
-        return results;
+        Page<Filme> page = filmeRepository.findAll(pagination);
+        page.getContent().stream().map(r -> results.add(entityToModel(new FilmeModel(), r))).collect(Collectors.toList());
+
+        TesteResponse<FilmeModel> result = new TesteResponse<>();
+        result.setFirst(page.isFirst());
+        result.setPageNumber(page.getNumber());
+        result.setTotalPages(page.getTotalPages());
+        result.setPageSize(page.getSize());
+        result.setTotalElements(page.getTotalElements());
+        result.setNumberOfElements(page.getNumberOfElements());
+        result.setLast(page.isLast());
+        result.setContent(results);
+
+        return result;
     }
 
     @Override
@@ -62,3 +85,4 @@ public class FilmeServiceImpl implements FilmeService {
     }
 
 }
+

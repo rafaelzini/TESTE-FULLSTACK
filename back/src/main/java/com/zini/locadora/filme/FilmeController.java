@@ -4,7 +4,11 @@ package com.zini.locadora.filme;
 import com.zini.locadora.locacao.LocacaoService;
 import com.zini.locadora.models.FilmeModel;
 import com.zini.locadora.models.LocacaoModel;
+import com.zini.locadora.utils.BaseFilter;
+import com.zini.locadora.utils.TesteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,8 +22,8 @@ public class FilmeController {
     private FilmeService service;
 
     @GetMapping
-    public List<FilmeModel> findAll() {
-        return service.list();
+    public TesteResponse<FilmeModel> findAll(BaseFilter baseFilter) {
+        return service.list(baseFilter);
     }
 
     @PostMapping
